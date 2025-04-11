@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { createdAt, id, updatedAt } from "../schemaHelpers";
 import { relations } from "drizzle-orm";
-import { UserTable } from "./user";
+import { UserTable } from "./auth-schema";
 import { ProductTable } from "./product";
 
 export const PurchaseTable = pgTable("purchases", {
