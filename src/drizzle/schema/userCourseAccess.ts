@@ -1,7 +1,7 @@
 import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { createdAt, updatedAt } from "../schemaHelpers";
 import { relations } from "drizzle-orm";
-import { UserTable } from "./user";
+import { UserTable } from "./auth-schema";
 import { CourseTable } from "./course";
 
 export const UserCourseAccessTable = pgTable(
