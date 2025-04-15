@@ -24,9 +24,9 @@ export const auth = betterAuth({
     additionalFields: {
       role: {
         type: "string",
-        required: false,
+        required: true,
         defaultValue: userRoles[0], // "user"
-        //input: false, // don't allow user to set role
+        input: false, // don't allow user to set role
       },
     },
   },
