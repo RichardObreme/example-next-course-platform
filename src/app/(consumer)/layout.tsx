@@ -1,3 +1,7 @@
+"use client";
+
+import { authClient } from "@/lib/auth-client";
+import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -26,12 +30,7 @@ function Navbar() {
           {/* //TODO: 
             //! ONLY For logged user 
         */}
-          <Link
-            className="hover:bg-accent/10 flex items-center px-2"
-            href="/admin"
-          >
-            Admin
-          </Link>
+          <AdminLink />
           <Link
             className="hover:bg-accent/10 flex items-center px-2"
             href="/courses"
@@ -53,5 +52,19 @@ function Navbar() {
         </>
       </nav>
     </header>
+  );
+}
+
+function AdminLink() {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  if (!user || user == undefined) return null;
+
+  if (!canAccessAdminPages(user)) return null;
+
+  return (
+    <Link className="hover:bg-accent/10 flex items-center px-2" href="/admin">
+      Admin
+    </Link>
   );
 }
