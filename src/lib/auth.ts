@@ -36,5 +36,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [nextCookies()],
+  plugins: [
+    nextCookies(), // need to be the last plugin
+  ],
 });
