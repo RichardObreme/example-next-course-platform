@@ -22,6 +22,7 @@ import {
 import { Button } from "./ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "./ui/input";
+import Link from "next/link";
 
 type LoginFormValues = {
   email: string;
@@ -95,6 +96,15 @@ export default function LoginDialog({ children }: LoginDialogProps) {
             <Button type="submit">Connexion</Button>
           </form>
         </Form>
+        <p className="text-xs">
+          Pas encore membre ?{" "}
+          <Link
+            href="/sign-up"
+            className="hover:cursor-pointer underline text-xs hover:text-gray-400"
+          >
+            Inscription
+          </Link>
+        </p>
       </DialogContent>
     </Dialog>
   );
