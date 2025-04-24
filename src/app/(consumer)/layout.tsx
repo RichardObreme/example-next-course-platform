@@ -1,5 +1,7 @@
 "use client";
 
+import LoginDialog from "@/components/LoginDialog";
+import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
@@ -43,11 +45,13 @@ function Navbar() {
           >
             Purchase History
           </Link>
-          <div className="size-8 self-center">
-            <button>Sign-in</button>
+          <div className="flex items-center">
+            <LoginDialog>
+              <Button>Sign-in</Button>
+            </LoginDialog>
           </div>
-          <div className="size-8 self-center">
-            <button>Sign-out</button>
+          <div className="flex items-center">
+            <Button>Sign-out</Button>
           </div>
         </>
       </nav>
