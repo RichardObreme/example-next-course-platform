@@ -19,6 +19,14 @@ export default function ConsumerLayout({
 }
 
 function Navbar() {
+  const { data: session } = authClient.useSession();
+
+  let role = "guest";
+
+  if (session && session.user) {
+    role = session.user.role;
+  }
+
   return (
     <header className="flex h-12 shadow bg-background z-10">
       <nav className="flex gap-4 container">
@@ -45,14 +53,17 @@ function Navbar() {
           >
             Purchase History
           </Link>
-          <div className="flex items-center">
-            <LoginDialog>
-              <Button>Sign-in</Button>
-            </LoginDialog>
-          </div>
-          <div className="flex items-center">
-            <Button>Sign-out</Button>
-          </div>
+          {role === "guest" ? (
+            <div className="flex items-center">
+              <LoginDialog>
+                <Button>Sign-in</Button>
+              </LoginDialog>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <Button onClick={() => authClient.signOut()}>Sign-out</Button>
+            </div>
+          )}
         </>
       </nav>
     </header>

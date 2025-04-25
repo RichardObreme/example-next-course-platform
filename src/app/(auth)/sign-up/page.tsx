@@ -11,12 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 type SignUpFormValues = {
   email: string;
+  pseudo: string;
   password: string;
   confirm: string;
 };
@@ -26,6 +28,9 @@ const signUpFormValues = z
     email: z
       .string({ required_error: "Email manquant" })
       .email("Cet email n'est pas valide"),
+    pseudo: z
+      .string({ required_error: "Pseudo manquant" })
+      .min(3, "Votre pseudo doit contenir au moins 3 caractères."),
     password: z
       .string({ required_error: "Veuillez entrer votre mot de passe" })
       .min(6, "Veuillez entrer votre mot de passe d'au moins 6 caractères"),
@@ -43,13 +48,38 @@ export default function SignUpPage() {
     resolver: zodResolver(signUpFormValues),
     defaultValues: {
       email: "",
+      pseudo: "",
       password: "",
       confirm: "",
     },
   });
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignUpFormValues> = async (formData) => {
+    console.log(formData);
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        email: formData.email, // user email address
+        password: formData.password, // user password -> min 8 characters by default
+        name: formData.pseudo, // user display name
+        callbackURL: "/", // A URL to redirect to after the user verifies their email (optional)
+      },
+      {
+        onRequest: (ctx) => {
+          //show loading
+          console.log("onRequest:", ctx);
+        },
+        onSuccess: (ctx) => {
+          //redirect to the dashboard or sign in page
+          console.log("onSuccess:", ctx);
+        },
+        onError: (ctx) => {
+          // display the error message
+          alert(ctx.error.message);
+        },
+      }
+    );
+    console.log(data, error);
   };
 
   return (
@@ -64,6 +94,19 @@ export default function SignUpPage() {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input placeholder="adresse@mail.fr" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="pseudo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pseudo</FormLabel>
+                <FormControl>
+                  <Input placeholder="Pseudo" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
