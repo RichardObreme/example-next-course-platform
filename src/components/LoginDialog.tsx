@@ -23,6 +23,7 @@ import { Button } from "./ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "./ui/input";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 type LoginFormValues = {
   email: string;
@@ -49,8 +50,32 @@ export default function LoginDialog({ children }: LoginDialogProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginFormValues> = async (formData) => {
+    const { data, error } = await authClient.signIn.email(
+      {
+        /**
+         * The user email
+         */
+        email: formData.email,
+        /**
+         * The user password
+         */
+        password: formData.password,
+        /**
+         * A URL to redirect to after the user verifies their email (optional)
+         */
+        callbackURL: "/",
+        /**
+         * remember the user session after the browser is closed.
+         * @default true
+         */
+        rememberMe: false,
+      },
+      {
+        //callbacks
+      }
+    );
+    console.log("SignIn:", data, error);
   };
 
   return (
