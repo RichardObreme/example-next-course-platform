@@ -1,7 +1,6 @@
-"use client";
-
+import SignOut from "@/components/SignOut";
 import { Badge } from "@/components/ui/badge";
-import { authClient } from "@/lib/auth-client";
+import { getCurrentUser } from "@/features/users/db/users";
 import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -50,11 +49,8 @@ function Navbar() {
           >
             Sales
           </Link>
-          <div className="size-8 self-center">
-            <button>Sign-in</button>
-          </div>
-          <div className="size-8 self-center">
-            <button>Sign-out</button>
+          <div className="flex items-center">
+            <SignOut />
           </div>
         </>
       </nav>
@@ -62,12 +58,8 @@ function Navbar() {
   );
 }
 
-function AdminLink() {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
-  if (!user || user == undefined) return null;
-
-  if (!canAccessAdminPages(user)) return null;
+async function AdminLink() {
+  if (!canAccessAdminPages(await getCurrentUser())) return null;
 
   return (
     <Link className="hover:bg-accent/10 flex items-center px-2" href="/admin">

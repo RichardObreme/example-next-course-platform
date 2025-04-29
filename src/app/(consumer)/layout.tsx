@@ -1,8 +1,7 @@
-"use client";
-
 import LoginDialog from "@/components/LoginDialog";
+import SignOut from "@/components/SignOut";
 import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
+import { getCurrentUser } from "@/features/users/db/users";
 import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -18,13 +17,13 @@ export default function ConsumerLayout({
   );
 }
 
-function Navbar() {
-  const { data: session } = authClient.useSession();
+async function Navbar() {
+  const user = await getCurrentUser();
 
   let role = "guest";
 
-  if (session && session.user) {
-    role = session.user.role;
+  if (user.role) {
+    role = user.role;
   }
 
   return (
@@ -61,7 +60,7 @@ function Navbar() {
             </div>
           ) : (
             <div className="flex items-center">
-              <Button onClick={() => authClient.signOut()}>Sign-out</Button>
+              <SignOut />
             </div>
           )}
         </>
@@ -70,12 +69,8 @@ function Navbar() {
   );
 }
 
-function AdminLink() {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
-  if (!user || user == undefined) return null;
-
-  if (!canAccessAdminPages(user)) return null;
+async function AdminLink() {
+  if (!canAccessAdminPages(await getCurrentUser())) return null;
 
   return (
     <Link className="hover:bg-accent/10 flex items-center px-2" href="/admin">
