@@ -30,7 +30,7 @@ export default function SortableSectionList({
           <SortableItem
             key={section.id}
             id={section.id}
-            className="felx items-center gap-1"
+            className="flex items-center gap-1"
           >
             <div
               className={cn(

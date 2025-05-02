@@ -89,7 +89,7 @@ export function SortableItem({ id, children, className }: SortableItemProps) {
         transition,
       }}
       className={cn(
-        "felx gap-1 items-center bg-background rounded-lg p-2",
+        "flex gap-1 items-center bg-background rounded-lg p-2",
         isActive && "z-10 border shadow-md"
       )}
     >
