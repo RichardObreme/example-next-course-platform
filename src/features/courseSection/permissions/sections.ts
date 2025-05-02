@@ -1,6 +1,6 @@
 import { UserRole } from "@/drizzle/schema";
 
-export function canCreateCourses({
+export function canCreateCourseSections({
   role,
 }: {
   role: UserRole | string | undefined;
@@ -8,7 +8,7 @@ export function canCreateCourses({
   return role === "admin";
 }
 
-export function canUpdateCourses({
+export function canUpdateCourseSections({
   role,
 }: {
   role: UserRole | string | undefined;
@@ -16,7 +16,7 @@ export function canUpdateCourses({
   return role === "admin";
 }
 
-export function canDeleteCourses({
+export function canDeleteCourseSections({
   role,
 }: {
   role: UserRole | string | undefined;

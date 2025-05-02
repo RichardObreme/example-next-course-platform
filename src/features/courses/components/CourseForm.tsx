@@ -16,20 +16,30 @@ import { RequiredLabelIcon } from "@/components/RequiredLabelIcon";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { createCourse } from "../actions/courses";
+import { createCourse, updateCourse } from "../actions/courses";
 import { actionToast } from "@/lib/actionToast";
 
-export function CourseForm() {
+type CourseFormProps = {
+  course?: {
+    id: string;
+    name: string;
+    description: string;
+  };
+};
+
+export function CourseForm({ course }: CourseFormProps) {
   const form = useForm<z.infer<typeof courseSchema>>({
     resolver: zodResolver(courseSchema),
-    defaultValues: {
+    defaultValues: course ?? {
       name: "",
       description: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof courseSchema>) {
-    const data = await createCourse(values);
+    const action =
+      course == null ? createCourse : updateCourse.bind(null, course.id);
+    const data = await action(values);
     actionToast(data);
     console.log(data);
   }
