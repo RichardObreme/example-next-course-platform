@@ -12,6 +12,7 @@ import {
   insertSection,
   updateSection as updateSectionDb,
   deleteSection as deleteSectionDb,
+  updateSectionOrders as updateSectionOrdersDb,
 } from "../db/sections";
 import { getCurrentUser } from "@/features/users/db/users";
 
@@ -55,4 +56,17 @@ export async function deleteSection(id: string) {
   await deleteSectionDb(id);
 
   return { error: false, message: "Successfully deleted your section" };
+}
+
+export async function updateSectionOrders(sectionIds: string[]) {
+  if (
+    sectionIds.length === 0 ||
+    !canUpdateCourseSections(await getCurrentUser())
+  ) {
+    return { error: true, message: "Error reordering your sections" };
+  }
+
+  await updateSectionOrdersDb(sectionIds);
+
+  return { error: false, message: "Successfully reordered your sections" };
 }
