@@ -41,7 +41,6 @@ export function CourseForm({ course }: CourseFormProps) {
       course == null ? createCourse : updateCourse.bind(null, course.id);
     const data = await action(values);
     actionToast(data);
-    console.log(data);
   }
 
   return (
