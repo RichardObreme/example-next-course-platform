@@ -3,11 +3,15 @@ import { Badge } from "@/components/ui/badge";
 import { getCurrentUser } from "@/features/users/db/users";
 import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
+  const role = (await getCurrentUser()).role;
+  if (role !== "admin") return notFound();
+
   return (
     <>
       <Navbar />
