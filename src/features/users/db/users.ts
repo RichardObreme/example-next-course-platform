@@ -8,7 +8,7 @@ export async function getCurrentUser() {
     headers: await headers(),
   });
 
-  if (!session) return { role: undefined };
+  if (!session) return { role: undefined, id: null };
 
   return session.user;
 }
