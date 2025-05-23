@@ -19,3 +19,11 @@ export function formatPrice(amount: number, { showZeroAsNumber = false } = {}) {
 
   return formatter.format(amount);
 }
+
+export function formatDate(date: Date) {
+  const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+  return DATE_FORMATTER.format(date);
+}

@@ -45,8 +45,8 @@ export default function LoginDialog({ children }: LoginDialogProps) {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormValues),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@test.test",
+      password: "azertyuiop",
     },
   });
 

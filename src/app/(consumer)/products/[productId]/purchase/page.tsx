@@ -6,6 +6,7 @@ import { getProductIdTag } from "@/features/products/db/cache";
 import { userOwnsProduct } from "@/features/products/db/products";
 import { wherePublicProducts } from "@/features/products/permissions/products";
 import { getCurrentUser } from "@/features/users/db/users";
+import StripeCheckoutForm from "@/services/stripe/components/StripeCheckoutForm";
 import { and, eq } from "drizzle-orm";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { notFound, redirect } from "next/navigation";
