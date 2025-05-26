@@ -25,15 +25,15 @@ import { Fragment, Suspense } from "react";
 import Stripe from "stripe";
 
 type PurchasePageProps = {
-  params: Promise<{ purcharseId: string }>;
+  params: Promise<{ purchaseId: string }>;
 };
 
 export default async function PurchasePage({ params }: PurchasePageProps) {
-  const { purcharseId } = await params;
+  const { purchaseId } = await params;
   return (
     <div className="container my-6">
       <Suspense fallback={<LoadingSpinner className="size-36 mx-auto" />}>
-        <SuspenseBoundary purchaseId={purcharseId} />
+        <SuspenseBoundary purchaseId={purchaseId} />
       </Suspense>
     </div>
   );
