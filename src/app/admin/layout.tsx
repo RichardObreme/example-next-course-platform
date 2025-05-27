@@ -1,7 +1,6 @@
 import SignOut from "@/components/SignOut";
 import { Badge } from "@/components/ui/badge";
 import { getCurrentUser } from "@/features/users/db/users";
-import { canAccessAdminPages } from "@/permissions/general";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
@@ -25,21 +24,17 @@ function Navbar() {
     <header className="flex h-12 shadow bg-background z-10">
       <nav className="flex gap-4 container">
         <div className="mr-auto flex items-center gap-2">
-          <Link className="text-lg hover:underline" href={"/"}>
+          <Link className="text-lg hover:underline" href={"/admin"}>
             Web Dev Simplified
           </Link>
           <Badge>Admin</Badge>
         </div>
         <>
-          {/* //TODO: 
-            //! ONLY For logged user 
-        */}
-          <AdminLink />
           <Link
             className="hover:bg-accent/10 flex items-center px-2"
             href="/admin/courses"
           >
-            My Courses
+            Courses
           </Link>
           <Link
             className="hover:bg-accent/10 flex items-center px-2"
@@ -59,15 +54,5 @@ function Navbar() {
         </>
       </nav>
     </header>
-  );
-}
-
-async function AdminLink() {
-  if (!canAccessAdminPages(await getCurrentUser())) return null;
-
-  return (
-    <Link className="hover:bg-accent/10 flex items-center px-2" href="/admin">
-      Admin
-    </Link>
   );
 }
