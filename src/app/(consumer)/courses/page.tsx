@@ -1,7 +1,3 @@
-/* type CoursesPageProps = {
-  
-}; */
-
 import PageHeader from "@/components/PageHeader";
 import {
   SkeletonArray,
@@ -61,7 +57,7 @@ export default function CoursesPage(/* {  }: CoursesPageProps */) {
 
 async function CourseGrid() {
   const { id: userId } = await getCurrentUser();
-  if (userId == null) return redirect("/");
+  if (userId == null) return redirect("/sign-in");
 
   const courses = await getUserCourses(userId);
 
@@ -157,6 +153,7 @@ async function getUserCourses(userId: string) {
         eq(UserCourseAccessTable.userId, userId)
       )
     )
+    .where(eq(UserCourseAccessTable.userId, userId))
     .leftJoin(
       CourseSectionTable,
       and(

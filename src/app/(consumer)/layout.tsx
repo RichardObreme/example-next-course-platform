@@ -18,13 +18,7 @@ export default function ConsumerLayout({
 }
 
 async function Navbar() {
-  const user = await getCurrentUser();
-
-  let role = "guest";
-
-  if (user.role) {
-    role = user.role;
-  }
+  const { role } = await getCurrentUser();
 
   return (
     <header className="flex h-12 shadow bg-background z-10">
@@ -36,23 +30,24 @@ async function Navbar() {
           Web Dev Simplified
         </Link>
         <>
-          {/* //TODO: 
-            //! ONLY For logged user 
-        */}
           <AdminLink />
-          <Link
-            className="hover:bg-accent/10 flex items-center px-2"
-            href="/courses"
-          >
-            My Courses
-          </Link>
-          <Link
-            className="hover:bg-accent/10 flex items-center px-2"
-            href="/purchases"
-          >
-            Purchase History
-          </Link>
-          {role === "guest" ? (
+          {role && (
+            <Link
+              className="hover:bg-accent/10 flex items-center px-2"
+              href="/courses"
+            >
+              My Courses
+            </Link>
+          )}
+          {role && (
+            <Link
+              className="hover:bg-accent/10 flex items-center px-2"
+              href="/purchases"
+            >
+              Purchase History
+            </Link>
+          )}
+          {!role ? (
             <div className="flex items-center">
               <LoginDialog>
                 <Button>Sign-in</Button>

@@ -11,9 +11,12 @@ import { getCurrentUser } from "@/features/users/db/users";
 import { desc, eq } from "drizzle-orm";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default function PurchasesPage() {
+export default async function PurchasesPage() {
+  const { id: userId } = await getCurrentUser();
+  if (userId == null) return redirect("/sign-in");
   return (
     <div className="container my-6">
       <PageHeader title="Purchase History" />

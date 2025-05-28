@@ -14,6 +14,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
   const { courseId } = await params;
   const course = await getCourse(courseId);
 
+  console.log(course);
+
   if (course == null) return notFound();
 
   return (
