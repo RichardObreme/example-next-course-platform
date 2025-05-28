@@ -167,7 +167,7 @@ async function PurchaseButton({ productId }: { productId: string }) {
     userId != null && (await userOwnsProduct({ userId, productId }));
 
   if (alreadyOwnProduct) {
-    return <p>You already oqwn this product</p>;
+    return <p>You already own this product</p>;
   } else {
     return (
       <Button className="text-xl h-auto py-4 px-8 rounded-lg" asChild>

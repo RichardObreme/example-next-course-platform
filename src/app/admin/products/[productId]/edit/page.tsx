@@ -20,7 +20,7 @@ export default async function EditProductPage({
 
   return (
     <div className="container my-6">
-      <PageHeader title="New Product" />
+      <PageHeader title="Edit Product" />
       <ProductForm
         product={{
           ...product,

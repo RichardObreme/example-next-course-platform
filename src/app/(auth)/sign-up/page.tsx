@@ -117,13 +117,9 @@ export default function SignUpPage() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Mot de passe</FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="mot de passe"
-                    type="password"
-                    {...field}
-                  />
+                  <Input placeholder="password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -136,25 +132,21 @@ export default function SignUpPage() {
               <FormItem>
                 <FormLabel>Confirmation</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="mot de passe"
-                    type="password"
-                    {...field}
-                  />
+                  <Input placeholder="password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Créer un compte</Button>
+          <Button type="submit">Create an account</Button>
           <p className="text-xs">
-            Déjà membre ?
+            Already member ?
             <LoginDialog>
               <Button
                 variant="link"
                 className="hover:cursor-pointer underline text-xs hover:text-gray-400"
               >
-                Connexion
+                Connection
               </Button>
             </LoginDialog>
           </p>

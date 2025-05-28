@@ -20,7 +20,7 @@ import { stripeServerClient } from "@/services/stripe/stripeServer";
 import { and, eq } from "drizzle-orm";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Fragment, Suspense } from "react";
 import Stripe from "stripe";
 
@@ -42,7 +42,7 @@ export default async function PurchasePage({ params }: PurchasePageProps) {
 async function SuspenseBoundary({ purchaseId }: { purchaseId: string }) {
   const user = await getCurrentUser();
 
-  if (user.id == null) return;
+  if (user.id == null) return redirect("/sign-up");
 
   const purchase = await getPurchase({ userId: user.id, id: purchaseId });
 
